@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;margin: 0;box-sizing: border-box;
+        }
+        ::-webkit-scrollbar{
+            width: 10px;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-track{
+            background:blue;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: yellow;
+            border-radius: 20px;
+        }
+        #main{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: grey;
+        }
+        .sc{
+            width: 50px;
+            height: 400px;
+            overflow-y: scroll;
+            scrollbar-color: red;
+            scrollbar-width: 100px;
+            >div{
+                width: 100%;
+            }
+        }
+        .bus{
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            box-shadow: -10px 0px 20px 30px rgb(9, 9, 9);
+        }
+        .bus1{
+            height: 100%;
+            position: absolute;
+            top: 0;left: 0px;
+            display: flex;
+            transition: .6s;
+            >figure{
+                width: 400px;
+                height: 100%;
+                border: 1px solid grey;
+                >img{
+                    width: 400px;
+                    height: 100%;
+                    object-fit: fill;
+                }
+            }   
+        }
+    </style>
+</head>
+<body>
+    <main id="main">
+        <div class="bus">
+            <div class="bus1">
+                <figure>
+                    <img src="img/trainer-1.jpg" alt="">
+                </figure>
+                <figure>
+                    <img src="img/trainer-3.jpg" alt="">
+                </figure>
+                <figure>
+                    <img src="img/trainer-4.jpg" alt="">
+                </figure>
+                <figure>
+                    <img src="img/trainer-2.jpg" alt="">
+                </figure>
+                <figure>
+                    <img src="img/program-3.jpg" alt="">
+                </figure>
+            </div>
+        </div>
+        <div class="sc">
+            <div class="height"></div>
+        </div>
+    </main>
+</body>
+<script>
+    let y = document.getElementsByTagName('figure')[4].clientWidth
+    let _st = 0
+    console.log(y);
+    let x = document.getElementsByClassName('bus1')[0].clientWidth
+    document.getElementsByClassName('height')[0].style.height=x+'px'
+    document.getElementsByClassName('sc')[0].addEventListener('scroll',(e)=>{
+        _st = e.target.scrollTop
+        document.getElementsByClassName('bus1')[0].style.left=-(_st)+'px'
+    })
+    document.getElementsByClassName('bus')[0].addEventListener('mousewheel',(e)=>{
+        console.log(e.deltaY);
+        let y = e.deltaY
+        document.getElementsByClassName('sc')[0].scrollTop +=y
+        if(y >0 && _st>=-1200 && y<=1200){
+            _st = _st - 400
+            console.log(_st);
+            document.getElementsByClassName('bus1')[0].style.left=_st+'px'
+        }
+        if(y <0 && _st<=-400){
+            _st = +(_st) + 400
+            document.getElementsByClassName('bus1')[0].style.left=_st+'px'
+        }
+    })
+</script>
+</html>
